@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="feedback_advanced_search">
+    <title>Feedback Advanced Search</title>
+    <shortdesc>Besides simple search, Feedback also supports advanced query syntax that allows users
+        to create more complex, flexible and useful queries in order to make the search more
+        precise. In this topic you'll get acknowledged with the advanced search features that you
+        can use in Feedback Search.</shortdesc>
+    <body>
+        <p>
+            <ul id="ul_m4r_4d4_myb">
+                <li><b>Phrase Search</b><p>A query is divided into terms and operators, comprising
+                        two term categories: <b>Single Terms</b> and <b>Phrases</b>.</p><p>A Single
+                        Term pertains to an individual word, like "test" or "hello".</p><p>A Phrase
+                        denotes a cluster of words enclosed within double quotation marks, such as
+                        "hello dolly".</p><p>Using Term Search the search will only return results
+                        where the phrase is exactly encountered.</p></li>
+                <li><b>Field Search</b><p>Feedback Search provides support for fielded data. During
+                        a search, you have the option to specify a particular field.</p><p>To search
+                        within any given field, you can input the field name followed by a colon ":"
+                        and then the term you're seeking.</p><p>For instance,  if you're attempting
+                        to locate a document titled "The Right Way" you can input:</p><ul
+                        id="ul_i4q_cf4_myb">
+                        <li><codeph>__xml_title__:"The Right Way"</codeph></li>
+                    </ul><p>It's important to note that the field specification is applicable solely
+                        to the term it directly precedes. For instance, the query:</p><ul
+                        id="ul_k4q_cf4_myb">
+                        <li><codeph>__xml_title__:Do it right</codeph></li>
+                    </ul><p>Will solely retrieve "Do" from the title field. Meanwhile, it will
+                        locate both "it" and "right" within the default field (in this case, the
+                            <b>__text__</b> field, which stores all the text from the
+                        document).</p><p>The list of available fields:<ul id="ul_yqt_qf4_myb">
+                            <li><b>__xml_title__</b> - The title of the document.</li>
+                            <li><b>__desc__</b> - The descrption of the document.</li>
+                            <li><b>__text__</b> - The raw text content of the document.</li>
+                            <li><b>__meta_keywords__</b> - The keywords of the document.</li>
+                        </ul></p></li>
+                <li><b>Wildcard Search</b><p>Feedback search facilitates both single and multiple
+                        character wildcard searches within individual terms (these are not
+                        applicable within phrase queries).</p><p>For a single character wildcard
+                        search, employ the <b>?</b> symbol.</p><p>When conducting a multiple
+                        character wildcard search, employ the <b>*</b> symbol.</p><p>The single
+                        character wildcard search scans for terms that match with a single character
+                        substitution. For instance, to find "meet" or "meat," you can utilize the
+                        search:</p><ul id="ul_tzk_jg4_myb">
+                        <li><codeph>me?t</codeph></li>
+                    </ul><p>On the other hand, multiple character wildcard searches are designed to
+                        match 0 or more characters. For instance, when searching for "test,"
+                        "tests," or "tester," you can employ the search:</p><ul id="ul_uzk_jg4_myb">
+                        <li><codeph>test*</codeph></li>
+                    </ul><p>It's also possible to integrate wildcard searches within the middle of a
+                        term.</p><p>For instance:</p><ul id="ul_vzk_jg4_myb">
+                        <li><codeph>te*t</codeph></li>
+                    </ul><p>Importantly, please note that you cannot initiate a search with the * or
+                        ? symbol as the first character.</p></li>
+                <li><b>Regular Expression Search</b><p>Feedback search enables the utilization of
+                        regular expression searches to match patterns enclosed within forward
+                        slashes "/". To illustrate, for locating documents containing either "moat"
+                        or "boat," you can employ:</p><ul id="ul_ipy_wg4_myb">
+                        <li><codeph>/[mb]oat/</codeph></li>
+                    </ul></li>
+                <li><b>Proximity Search</b><p>Feedback search offers the capability to identify
+                        words that are situated within a defined distance of each other. To conduct
+                        a proximity search, append the tilde symbol <b>~</b> to the end of a Phrase.
+                        For instance, if you intend to search for the terms "dita" and "webhelp"
+                        within a maximum of 10 words of separation in a document, you can utilize
+                        the search:</p><ul id="ul_s35_sj4_myb">
+                        <li><codeph>"dita webhelp"~10</codeph></li>
+                    </ul></li>
+                <li><b>Boosting</b><p>To emphasize a specific term's importance, utilize the caret
+                        symbol "^" followed by a boost factor (a numerical value) at the term's end.
+                        A higher boost factor increases the term's significance.</p><p>This boosting
+                        approach allows you to control a document's relevance by amplifying the
+                        weight of its term. For instance, if you're searching for "dita webhelp" and
+                        wish to enhance the relevance of "dita," apply the <b>^</b> symbol with a
+                        boost factor after the term:</p><ul id="ul_gmy_bk4_myb">
+                        <li><codeph>dita^4 webhelp</codeph></li>
+                    </ul><p>This adjustment elevates the prominence of documents featuring the term
+                        "dita."</p><p> Additionally, the boosting technique can be applied to Phrase
+                        Terms, illustrated in this example:</p><ul id="ul_hmy_bk4_myb">
+                        <li><codeph>"dita webhelp"^4 "feedback search"</codeph></li>
+                    </ul><p>The default boost factor is 1, and while it must be a positive value, it
+                        can also be less than 1 (e.g., 0.2).</p></li>
+                <li><b>Boolean Operators</b><p>Boolean operators enable the combination of terms
+                        using logical operators. Feedback supports <b>AND</b>, <b>+</b>, <b>OR</b>,
+                            <b>NOT</b>, and <b>-</b> as Boolean operators (Note: Boolean operators
+                        must be in ALL CAPS).</p><p>The <b>OR</b> operator functions as the default
+                        conjunction operator. If no Boolean operator is present between two terms,
+                        the <b>OR</b> operator is assumed. It links two terms and identifies a
+                        matching document if either term is present. This is comparable to a set
+                        union. The symbol || can replace the term <b>OR</b>.</p><p>For searching
+                        documents that contain either "dita webhelp" or simply "dita," use the
+                        query:</p><ul id="ul_esl_jl4_myb">
+                        <li><codeph>"dita webhelp" dita</codeph></li>
+                        <li><codeph>"dita webhelp" OR dita</codeph></li>
+                    </ul><p><b>Operators</b><ul id="ul_tgc_rl4_myb">
+                            <li><b>AND</b><p>The <b>AND</b> operator locates documents where both
+                                    terms appear anywhere within a single document. This equates to
+                                    a set intersection. The symbol &amp;&amp; can be used in place
+                                    of the term <b>AND</b>.</p><p>To find documents containing "dita
+                                    webhelp" and "feedback search," employ the query:</p><ul
+                                    id="ul_qkf_5l4_myb">
+                                    <li><codeph>"dita webhelp" AND "feedback search"</codeph></li>
+                                </ul></li>
+                        </ul><ul id="ul_qkr_xl4_myb">
+                            <li><b>+</b><p>The <b>+</b> or required operator requires that the term
+                                    after the <b>+</b> symbol exist somewhere in a the field of a
+                                    single document. </p><p>To search for documents that must
+                                    contain "dita" and may contain "webhelp" use the query:<ul
+                                        id="ul_lqn_zl4_myb">
+                                        <li><codeph> +dita webhelp</codeph></li>
+                                    </ul></p></li>
+                        </ul><ul id="ul_zvl_bm4_myb">
+                            <li><b>NOT</b><p>The <b>NOT</b> operator excludes documents that contain
+                                    the term after NOT. This is equivalent to a difference using
+                                    sets. The symbol <b>! </b> can be used in place of the word
+                                        <b>NOT</b>. </p><p>To search for documents that contain
+                                    "dita webhelp" but not "feedback search" use the query:<ul
+                                        id="ul_n5d_gm4_myb">
+                                        <li><codeph>"dita webhelp" NOT "feedback search"
+                                            </codeph></li>
+                                    </ul><note id="note_cjf_hm4_myb"> The <b>NOT</b> operator cannot
+                                        be used with just one term. For example, the following
+                                        search will return no results: <ul id="ul_fpx_hm4_myb">
+                                            <li><codeph>NOT "dita webhelp"</codeph></li>
+                                        </ul></note></p></li>
+                        </ul><ul id="ul_flb_jm4_myb">
+                            <li><b>-</b><p>The <b>-</b> or prohibit operator removes documents
+                                    containing the term following the <b>-</b> symbol.</p><p>For
+                                    discovering documents that feature "dita webhelp" while
+                                    excluding "feedback search," utilize the query:</p><ul
+                                    id="ul_xcg_lm4_myb">
+                                    <li><codeph>"dita webhelp" -"feedback search"</codeph></li>
+                                </ul></li>
+                        </ul></p></li>
+                <li><b>Field Grouping</b><p>Feedback allows the utilization of parentheses to group
+                        multiple clauses within a single field.</p><p>For instance, to search for a
+                        title that includes both the term "dita" and the phrase "feedback search"
+                        you can write the query:</p><ul id="ul_v2t_rm4_myb">
+                        <li><codeph>__xml_title__:(+dita +"feedback search")</codeph></li>
+                    </ul></li>
+                <li><b>Escaping Characters</b><p>Feedback search includes the capability to escape
+                        special characters that are integral to the query syntax. The present set of
+                        special characters includes:</p><ul id="ul_u4k_vm4_myb">
+                        <li><codeph>&amp;&amp; || ! ( ) { } [ ] ^ " ~ * ? : \</codeph></li>
+                    </ul><p>To escape these characters, use the backslash <b>/</b> before the
+                        character itself. For instance, if you wish to search for the expression
+                        (1+1):2, you can use the query:</p><ul id="ul_w4k_vm4_myb">
+                        <li><codeph>\(1\+1\)\:2</codeph></li>
+                    </ul></li>
+            </ul>
+        </p>
+    </body>
+</topic>
